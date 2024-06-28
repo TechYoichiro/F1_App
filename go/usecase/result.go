@@ -8,6 +8,7 @@ import (
 	"github.com/TechYoichiro/F1_App/interfaces"
 )
 
+// レースデータの取得と表示を行うユースケースインターフェース
 type RaceUsecase interface {
 	GetRaceData() (*domain.Race, error)
 	PrintRaceData() error
@@ -17,12 +18,14 @@ type raceUsecase struct {
 	raceRepo interfaces.RaceRepository
 }
 
+// 新しいRaceUsecaseを初期化
 func NewRaceUsecase(rr interfaces.RaceRepository) RaceUsecase {
 	return &raceUsecase{
 		raceRepo: rr,
 	}
 }
 
+// レースデータを取得し、Race構造体を返す
 func (ru *raceUsecase) GetRaceData() (*domain.Race, error) {
 	url := "http://ergast.com/api/f1/current/last/results.json"
 	apiResponse, err := ru.raceRepo.FetchRaceData(url)
@@ -37,6 +40,7 @@ func (ru *raceUsecase) GetRaceData() (*domain.Race, error) {
 	return &apiResponse.MRData.RaceTable.Races[0], nil
 }
 
+// レースデータを取得し、標準出力に表示する
 func (ru *raceUsecase) PrintRaceData() error {
 	race, err := ru.GetRaceData()
 	if err != nil {

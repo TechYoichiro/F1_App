@@ -2,7 +2,7 @@
 FROM node:20-alpine
 
 # 作業ディレクトリを設定
-WORKDIR /app
+WORKDIR /app/src 
 
 # キャッシュ利用で効率化するために別でコピー
 COPY package.json package-lock.json ./
